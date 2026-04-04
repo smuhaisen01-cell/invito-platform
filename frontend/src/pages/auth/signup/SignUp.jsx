@@ -14,6 +14,8 @@ import TopRight from "../../../../public/assets/images/bgtopcircle.png";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from 'jwt-decode';
 
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
 // Powered by nexplat.sa at the bottom center (as per login.jsx)
 export const PoweredByBox = () => (
   <Box
@@ -227,17 +229,19 @@ const Signup = () => {
                   <Link to="/" className="login-Link">Login</Link>
                 </Typography>
 
-                <Box className="google-login">
-                  <GoogleLogin
-                    onSuccess={handleGoogleLoginSuccess}
-                    onError={handleGoogleLoginFailure}
-                    theme="filled_tranparent"
-                    size="medium"
-                    text="signup_with"
-                    shape="pill"
-                    width="100%"
-                  />
-                </Box>
+                {GOOGLE_CLIENT_ID && (
+                  <Box className="google-login">
+                    <GoogleLogin
+                      onSuccess={handleGoogleLoginSuccess}
+                      onError={handleGoogleLoginFailure}
+                      theme="filled_tranparent"
+                      size="medium"
+                      text="signup_with"
+                      shape="pill"
+                      width="100%"
+                    />
+                  </Box>
+                )}
               </>
             )}
           </Box>
