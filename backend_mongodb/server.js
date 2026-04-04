@@ -103,9 +103,11 @@ if (fs.existsSync(cronjobsPath)) {
 
 // --- Begin server start logic (from server.js) ---
 const PORT = process.env.PORT || 8082;
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}\n`);
-  });
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}\n`);
+});
+
+connectDB().catch((error) => {
+  console.error("❌ Database connection failed during startup:", error.message);
 });
 // --- End server start logic ---
