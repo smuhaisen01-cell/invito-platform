@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #ffe9f3;
+    }
+
+    .email-wrapper {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #ffffff;
+      border: 2px dashed #d63384;
+    }
+
+    .content {
+      padding: 35px 28px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 28px;
+      color: #d63384;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .details {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+
+    .rsvp-highlight {
+      background: #d63384;
+      padding: 14px 24px;
+      font-weight: bold;
+      color: #fff !important;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .rsvp-highlight:hover {
+      background: #a32967;
+    }
+
+    .footer {
+      font-size: 13px;
+      color: #999;
+      text-align: center;
+      padding: 20px 15px;
+      background-color: #fff0f8;
+      border-top: 1px solid #f8c9de;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .social-icons img {
+      height: 24px;
+      width: 24px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-wrapper">
+    <div class="header">
+      <img src="{{image_url}}" alt="Cool Banner"
+        style="width: 100%; height: 300px; object-fit: cover;" />
+    </div>
+    <div class="content">
+      <div class="title">{{title}}</div>
+      <div class="details">{{description}}</div>
+      <a href="{{event_link}}" class="rsvp-highlight">Book My Spot</a>
+
+      <div class="social-icons">
+        <a href="{{instagram_link}}">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
+        </a>
+        <a href="{{linkedin_link}}">
+          <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" alt="LinkedIn" />
+        </a>
+        <a href="{{website_link}}">
+          <img src="https://cdn-icons-png.flaticon.com/512/10453/10453141.png" alt="Website" />
+        </a>
+      </div>
+    </div>
+    <div class="footer">
+      <p>This was sent by <strong>NexPlat SA</strong> 💌<br>
+        Riyadh, Saudi Arabia |
+        <a href="mailto:info@nexplat.sa">info@nexplat.sa</a> |
+        <a href="tel:+966503151125">+966 50 315 1125</a><br>
+        <a href="{{unsubscribe_link}}" style="color:#d63384;">Unsubscribe / Manage</a>
+      </p>
+      <p style="font-size: 12px;">Can’t see the link? Try a different browser. ✌️</p>
+    </div>
+  </div>
+</body>
+
+</html>

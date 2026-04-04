@@ -1,0 +1,31 @@
+@use "../../variables.scss" as *;
+
+.date-picker-popover {
+    margin-top: $space8;
+    border-radius: $border-radius-12;
+
+    .date-picker-section {
+        display: flex;
+
+        .date-picker-sidebar {
+
+            .date-picker-options-list {
+                .date-picker-option-item {
+                    border-radius: $border-radius-12;
+                    margin-bottom: $space4;
+                }
+            }
+        }
+
+        .date-picker-calendar-wrapper {
+            padding: $space0;
+        }
+    }
+
+    .date-picker-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: $space16;
+        gap: 16px;
+    }
+}

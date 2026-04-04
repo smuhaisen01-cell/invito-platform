@@ -1,0 +1,262 @@
+@use "../variables.scss" as *;
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #faf9fe !important;
+  color: #333;
+  margin: 0;
+  padding: 0 !important;
+  overflow: auto;
+   &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.container {
+  min-height: 100vh;
+  background-color: #faf9fe;
+}
+
+.css-19midj6 {
+  padding: 0 !important;
+}
+
+.error-message {
+  margin-bottom: $space16;
+  font-size: $font-size-16 !important;
+  text-align: center;
+  max-width: 400px;
+
+
+  @include breakpoints(xs) {
+    font-size: $font-size-12 !important;
+    margin-bottom: $space4;
+  }
+
+  @include breakpoints(sm) {
+    font-size: $font-size-14 !important;
+    margin-bottom: $space8;
+  }
+
+  @include breakpoints(md) {
+    font-size: $font-size-16 !important;
+    margin-bottom: $space16;
+  }
+}
+
+.success-message {
+  margin-bottom: $space16;
+  font-size: $font-size-16;
+  text-align: center;
+  max-width: 400px;
+}
+
+.custom-icon {
+  height: 20px !important;
+  width: 20px !important;
+  fill: $gray-text !important; 
+}
+
+.css-16bevx5-MuiFormControl-root-MuiTextField-root{
+  margin-top: 7px !important;
+}
+
+.MuiMultiSectionDigitalClock-root {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.MuiMultiSectionDigitalClockSection-root {
+  width: 85px !important;
+  justify-items: center;
+
+  &:hover {
+    border-radius: $border-radius-8 !important;
+  }
+
+  .Mui-selected {
+    background-color: $primary-purple !important;
+    border-radius: $border-radius-8 !important;
+  }
+}
+
+.MuiMultiSectionDigitalClock-section .MuiButtonBase-root:hover {
+  background-color: #e0dbf9;
+}
+
+.MuiClockPicker-root ::-webkit-scrollbar,
+.MuiMultiSectionDigitalClock-root ::-webkit-scrollbar,
+.MuiMultiSectionDigitalClockSection-root ::-webkit-scrollbar {
+  display: none !important;
+}
+
+.MuiClockPicker-root,
+.MuiMultiSectionDigitalClock-root,
+.MuiMultiSectionDigitalClockSection-root {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.MuiPickersDay-root.Mui-selected.MuiPickersDay-dayWithMargin {
+  background-color: $primary-purple !important;
+  color: white;
+}
+
+.MuiYearCalendar-root .MuiYearCalendar-button.Mui-selected {
+  background-color: $primary-purple !important;
+  color: white;
+}
+
+.css-1fb7els-MuiPickersSectionList-root,
+.MuiPickersInputBase-sectionsContainer,
+.MuiPickersOutlinedInput-sectionsContainer {
+  font-size: $font-size-14 !important;
+}
+
+
+.MuiPickersSectionList-root,
+.MuiPickersInputBase-sectionsContainer,
+.MuiPickersOutlinedInput-sectionsContainer {
+ color: $gray-text !important;
+ opacity: 7.42 !important;
+}
+
+.MuiTab-root.Mui-selected {
+  color: $primary-purple !important;
+}
+
+.MuiTabs-indicator {
+  background-color: $primary-purple !important;
+}
+
+
+
+
+*{
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+/* body {
+   font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  
+} */
+
+.sidebar .nav-link.active {
+  background-color: #0d6efd;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #0b5ed7;
+}
+.sidebar .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.table {
+font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+.secondHighColor{
+  color: #de5a0d !important;
+  font-weight: bold;
+
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div,
+span,
+b,
+td,
+a {
+  color: var(--slate700Color);
+  font-weight: 400;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #d4a019; /* mustard color */
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+
+/* When checked */
+
+
+/* Move the knob to the right */
+.switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round::before {
+  border-radius: 50%;
+}
+

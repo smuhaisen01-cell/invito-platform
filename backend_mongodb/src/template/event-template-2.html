@@ -1,0 +1,130 @@
+<!-- Filename: email-formal.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .email-wrapper {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 10px;
+        border: 1px solid #dcdcdc;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .content {
+        padding: 25px 30px;
+        text-align: left;
+      }
+
+      .title {
+        font-size: 24px;
+        color: #2b2d42;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .details {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      .rsvp-highlight {
+        display: inline-block;
+        background-color: #0056b3;
+        color: white !important;
+        padding: 12px 20px;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 6px;
+      }
+
+      .footer {
+        font-size: 12px;
+        color: #777;
+        text-align: center;
+        padding: 20px;
+        background: #f0f0f0;
+      }
+
+      .social-icons img {
+        height: 20px;
+        margin: 0 6px;
+      }
+
+       /* Gmail-specific fixes */
+       @media screen and (max-width: 600px) {
+        .email-wrapper {
+          width: 100% !important;
+          margin: 0 !important;
+        }
+        
+        .header img {
+          max-height: 200px;
+        }
+        
+        .content {
+          padding: 20px 15px;
+        }
+      }
+      
+    </style>
+  </head>
+
+  <body>
+    <div class="email-wrapper">
+      <div class="header" style="background-color: #e69ebe; border-top-left-radius: 16px; border-top-right-radius: 16px;">
+        <img
+          src="{{image_url}}"
+          alt="Banner"
+          style="
+            object-fit: cover;
+            display: block;
+            height:300px;
+            margin: 0 auto;
+            padding: 16px;
+            border-radius: 35px;
+          "
+        />
+      </div>
+      <div class="content">
+        <div class="title">{{title}}</div>
+        <div style="white-space: pre-line" class="details">{{description}}</div>
+        <a href="{{rsvp_link}}" class="rsvp-highlight">Confirm Attendance</a>
+        <div class="social-icons" style="margin-top: 25px">
+          <a href="{{linkedin_link}}"
+            ><img
+              src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png"
+              alt="LinkedIn"
+          /></a>
+          <a href="{{website_link}}"
+            ><img
+              src="https://cdn-icons-png.flaticon.com/512/10453/10453141.png"
+              alt="Website"
+          /></a>
+        </div>
+      </div>
+      <div class="footer">
+        <p>
+          This email is sent by <strong>NexPlat SA</strong>, Riyadh, Saudi
+          Arabia<br />
+          <a href="mailto:info@nexplat.sa">info@nexplat.sa</a> |
+          <a href="tel:+966503151125">+966 50 315 1125</a><br />
+          <a href="{{unsubscribe_link}}" style="color: #0056b3"
+            >Manage Subscription</a
+          >
+        </p>
+        <p>If links don't work, try a different browser.</p>
+      </div>
+    </div>
+  </body>
+</html>

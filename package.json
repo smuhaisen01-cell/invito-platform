@@ -1,0 +1,16 @@
+{
+  "name": "invito-platform",
+  "private": true,
+  "scripts": {
+    "install:frontend": "npm install --prefix frontend",
+    "install:backend": "npm install --prefix backend_mongodb",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend_mongodb",
+    "build:frontend": "npm run build --prefix frontend",
+    "lint:frontend": "npm run lint --prefix frontend"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "json2csv": "^6.0.0-alpha.2"
+  }
+}

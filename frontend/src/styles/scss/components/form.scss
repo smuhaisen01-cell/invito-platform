@@ -1,0 +1,128 @@
+@use '../variables.scss' as *;
+
+.input-container {
+  margin-bottom: $space16;
+
+  @include breakpoints(xs) {
+    margin-bottom: $space4;
+  }
+
+  @include breakpoints(sm) {
+    margin-bottom: $space8;
+  }
+
+  @include breakpoints(md) {
+    margin-bottom: $space16;
+  }
+
+  .input-label {
+    display: block;
+    font-size: $font-size-14;
+    color: $text-color;
+    margin-bottom: $space8;
+    text-align: left;
+
+    @include breakpoints(xs) {
+      font-size: $font-size-11;
+    }
+
+    @include breakpoints(sm) {
+      font-size: $font-size-12;
+    }
+
+    @include breakpoints(md) {
+      font-size: $font-size-14;
+    }
+  }
+
+  .input-field {
+    width: 100%;
+    padding: $space12;
+    font-size: $font-size-14;
+    border: 1px solid #dddddd;
+    border-radius: $border-radius-12;
+    outline: none;
+    color: $gray-text;
+    transition: border-color 0.3s ease;
+    background: $white-color !important;
+
+    &:focus {
+      background-color: #fff;
+    }
+
+    @include breakpoints(xs) {
+      font-size: $font-size-11;
+    }
+
+    @include breakpoints(sm) {
+      font-size: $font-size-14;
+    }
+  }
+
+  .password-field {
+    display: flex;
+    align-items: center;
+
+    .password-input-field {
+      flex: 1;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      border-right: none !important;
+      width: 100%;
+      padding: $space12;
+      font-size: $font-size-14;
+      border: 1px solid #dddddd;
+      border-radius: $border-radius-12;
+      outline: none;
+      color: $gray-text;
+      transition: border-color 0.3s ease;
+      background: $white-color;
+
+      &:focus {
+        background-color: #fff;
+      }
+
+      @include breakpoints(xs) {
+        padding: $space8;
+      }
+
+      @include breakpoints(sm) {
+        padding: $space12;
+      }
+    }
+
+    .password-icon-button {
+      border: 1px solid #ddd;
+      border-left: none;
+      border-radius: 0 8px 8px 0;
+      padding: 0.58rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: inherit;
+        color: inherit;
+        box-shadow: none;
+      }
+
+      @include breakpoints(xs) {
+        padding: 5.35px;
+      }
+
+      @include breakpoints(sm) {
+        padding: 0.58rem;
+      }
+
+      svg {
+        width: 18px;
+
+        @include breakpoints(xs) {
+          width: 14px;
+        }
+
+        @include breakpoints(sm) {
+          width: 18px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,629 @@
+@use "../../variables.scss" as *;
+
+.custom-step-connector.MuiStepConnector-vertical {
+    margin-left: $space8;
+    padding: $space0;
+
+    .custom-step-line {
+        min-height: 52px;
+        border-left-width: 2px;
+        border-left-style: solid;
+        border-color: $light-border-color;
+    }
+
+    &.custom-step-active .custom-step-line,
+    &.custom-step-completed .custom-step-line {
+        border-color: $primary-purple;
+    }
+}
+
+.custom-step-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    background-color: $light-border-color;
+    border: none;
+}
+
+.custom-step-icon.active {
+    background-color: $primary-purple;
+    border: 3px solid #BCA9EC;
+}
+
+.custom-step-icon.completed {
+    background-color: $primary-purple;
+}
+
+.step-box {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+
+    @include breakpoints(xs) {
+        flex-direction: column;
+        gap: 16px
+    }
+
+    @include breakpoints(sm) {
+        gap: 16px;
+        flex-direction: row;
+    }
+
+    @include breakpoints(md) {
+        gap: 24px;
+        flex-direction: row;
+    }
+
+    .step-left {
+        max-width: 295px;
+
+        .step-description {
+            font-weight: $font-medium;
+            color: $gray-text;
+            margin-bottom: $space8;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+
+        .step-list {
+            font-weight: $font-medium;
+            color: $gray-text;
+            padding-left: $space16;
+            margin: $space0;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+    }
+
+    .sample-email-box {
+        padding: $space16;
+        background-color: $bg-lightest-purple;
+        border-radius: $border-radius-12;
+        border: $box-border;
+        box-shadow: $popup-box-shadow;
+        min-width: 258px;
+
+        @include breakpoints(xs) {
+            padding: $space12;
+            min-width: 205px;
+        }
+
+        @include breakpoints(sm) {
+            padding: $space12;
+            min-width: 258px;
+        }
+
+        @include breakpoints(md) {
+            padding: $space16;
+            min-width: 258px;
+        }
+
+        .sample-email-heading {
+            font-size: $font-size-16;
+            font-weight: $font-bold;
+            color: $text-color;
+            padding-bottom: $space24;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+                padding-bottom: $space16;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+                padding-bottom: $space16;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+                padding-bottom: $space24;
+            }
+        }
+
+        .sample-email-text {
+            color: $text-color;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-14;
+            }
+
+            .bold-text {
+                font-weight: $font-bold;
+                color: $gray-text;
+
+                @include breakpoints(xs) {
+                    font-size: $font-size-12;
+                }
+
+                @include breakpoints(sm) {
+                    font-size: $font-size-12;
+                }
+
+                @include breakpoints(md) {
+                    font-size: $font-size-14;
+                }
+            }
+        }
+
+        .email-date {
+            color: $gray-text;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-14;
+            }
+        }
+    }
+
+    // 2nd popup
+    .rsvp-confirm-box {
+        padding: $space16;
+        background-color: $bg-lightest-purple;
+        border-radius: $border-radius-12;
+        border: $box-border;
+        box-shadow: $popup-box-shadow;
+        min-width: 258px;
+
+        @include breakpoints(xs) {
+            padding: $space12;
+            min-width: 205px;
+        }
+
+        @include breakpoints(sm) {
+            padding: $space12;
+            min-width: 206px;
+        }
+
+        @include breakpoints(md) {
+            padding: $space16;
+            min-width: 258px;
+        }
+
+        .bold-text {
+            font-size: $font-size-16;
+            font-weight: $font-bold;
+            color: $text-color;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+
+        .email-date {
+            color: $gray-text;
+            padding: $space24 $space0;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+                padding: $space16 $space0;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+                padding: $space12 $space0;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-14;
+                padding: $space24 $space0;
+            }
+        }
+
+        .action-buttons-container {
+            display: flex;
+            gap: 16px;
+
+            @include breakpoints(xs) {
+                gap: 8px;
+                justify-content: center;
+            }
+
+            @include breakpoints(sm) {
+                gap: 8px;
+                justify-content: center;
+            }
+
+            @include breakpoints(md) {
+                gap: 16px;
+            }
+        }
+    }
+
+    .step-right {
+        min-width: 260px;
+        font-weight: $font-medium;
+        color: $gray-text;
+        flex: 1;
+
+        @include breakpoints(xs) {
+            min-width: 205px;
+        }
+
+        @include breakpoints(sm) {
+            min-width: 200px;
+        }
+
+        @include breakpoints(md) {
+            min-width: 260px;
+        }
+
+        .step-description {
+            font-weight: $font-medium;
+            color: $gray-text;
+            margin-bottom: $space8;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+
+        .step-list {
+            font-weight: $font-medium;
+            color: $gray-text;
+            padding-left: $space16;
+            margin: $space0;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+    }
+
+    // 3rd popup
+    .step-left-qrcode-section {
+        flex: 1;
+        max-width: 400px;
+
+        @include breakpoints(sm) {
+            max-width: 240px;
+        }
+
+        @include breakpoints(md) {
+            max-width: 400px;
+        }
+
+        .step-description {
+            font-weight: $font-medium;
+            color: $gray-text;
+            margin-bottom: $space8;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+
+        .step-list {
+            font-weight: $font-medium;
+            color: $gray-text;
+            padding-left: $space16;
+            margin: $space0;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+    }
+
+    .qr-image {
+        max-width: 160px;
+
+        @include breakpoints(xs) {
+            display: flex;
+            justify-self: center;
+        }
+
+        @include breakpoints(sm) {
+            max-width: 160px;
+        }
+    }
+
+    // 4th popup
+    .scan-box {
+        padding: $space16;
+        background-color: $bg-lightest-purple;
+        border: $box-border;
+        box-shadow: $popup-box-shadow;
+        border-radius: $border-radius-12;
+        min-width: 258px;
+        height: 110px;
+        align-self: center;
+
+        @include breakpoints(xs) {
+            padding: $space12;
+            min-width: 222px;
+        }
+
+        @include breakpoints(sm) {
+            padding: $space12;
+            min-width: 200px;
+        }
+
+        @include breakpoints(md) {
+            padding: $space16;
+            min-width: 258px;
+        }
+
+        .scan-content-left-section {
+            .scan-success {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding-bottom: $space8;
+
+                .success-icon {
+                    color: #4CAF50;
+                    font-size: $font-size-24;
+
+                    @include breakpoints(xs) {
+                        font-size: $font-size-18;
+                    }
+
+                    @include breakpoints(sm) {
+                        font-size: $font-size-18;
+                    }
+
+                    @include breakpoints(md) {
+                        font-size: $font-size-24;
+                    }
+                }
+
+                .left-scan-section-heading {
+                    font-weight: $font-bold;
+                    color: $text-color;
+
+                    @include breakpoints(xs) {
+                        font-size: $font-size-12;
+                    }
+
+                    @include breakpoints(sm) {
+                        font-size: $font-size-12;
+                    }
+
+                    @include breakpoints(md) {
+                        font-size: $font-size-16;
+                    }
+                }
+            }
+
+            .scan-description {
+                color: $gray-text;
+
+                @include breakpoints(xs) {
+                    font-size: $font-size-12;
+                }
+
+                @include breakpoints(sm) {
+                    font-size: $font-size-12;
+                }
+
+                @include breakpoints(md) {
+                    font-size: $font-size-14;
+                }
+            }
+        }
+    }
+
+    .scan-content-right-section {
+        .step-description {
+            font-weight: $font-medium;
+            color: $gray-text;
+            margin-bottom: $space8;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+
+        .step-list {
+            font-weight: $font-medium;
+            color: $gray-text;
+            padding-left: $space16;
+            margin: $space0;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-16;
+            }
+        }
+    }
+}
+
+.onboarding-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 376px;
+    min-width: 710px;
+    background-color: $white-color;
+    border-radius: $border-radius-12;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.24);
+    display: flex;
+    outline: none;
+
+    @include breakpoints(xs) {
+        width: 170px;
+        min-width: 285px;
+        min-height: 375px;
+    }
+
+    @include breakpoints(sm) {
+        min-width: 510px;
+        min-height: 330px;
+    }
+
+    @include breakpoints(md) {
+        min-height: 376px;
+        min-width: 710px;
+    }
+
+    .onboarding-stepper {
+        width: 9%;
+        padding: $space40 $space24;
+        background-color: $accent-light-purple;
+        border-top-left-radius: $border-radius-12;
+        border-bottom-left-radius: $border-radius-12;
+
+        @include breakpoints(xs) {
+            width: 10%;
+            padding: $space24 $space6;
+        }
+
+        @include breakpoints(sm) {
+            width: 10%;
+            padding: $space24 $space16;
+        }
+
+        @include breakpoints(md) {
+            width: 9%;
+            padding: $space40 $space24;
+        }
+    }
+
+    .onboarding-step-content {
+        padding: $space24;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        @include breakpoints(xs) {
+            overflow-y: auto;
+            padding: $space16;
+        }
+
+        @include breakpoints(sm) {
+            padding: $space16;
+        }
+
+        @include breakpoints(md) {
+            padding: $space24;
+        }
+
+        .onboarding-step-title {
+            font-size: $font-size-20;
+            font-weight: $font-bold;
+            color: $text-color;
+            margin-bottom: $space24;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-16;
+                margin-bottom: $space16;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-18;
+                margin-bottom: $space16;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-20;
+                margin-bottom: $space24;
+            }
+        }
+
+        .onboarding-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: $space24;
+
+            @include breakpoints(sm) {
+                margin-top: auto;
+            }
+
+            @include breakpoints(md) {
+                margin-top: $space24;
+            }
+        }
+    }
+}

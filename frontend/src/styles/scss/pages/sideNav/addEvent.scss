@@ -1,0 +1,418 @@
+@use "../../variables.scss" as *;
+
+// base style
+.label-base {
+    margin: $space24 0 $space8;
+    display: block;
+    font-size: $font-size-14 !important;
+    color: $text-color !important;
+
+    @include breakpoints(xs) {
+        margin: $space16 0 $space8;
+    }
+
+    @include breakpoints(sm) {
+        margin: $space16 0 $space8;
+    }
+
+    @include breakpoints(md) {
+        margin: $space24 0 $space8;
+    }
+
+    @include breakpoints(lg) {
+        margin: $space24 0 $space8;
+    }
+}
+
+.media-label,
+.title-label,
+.description-label,
+.footer-label,
+.date-label,
+.time-label,
+.location-label,
+.send-on-label,
+.ph-number-label,
+.email-label,
+.invite-label {
+    @extend .label-base;
+}
+
+.add-event-container {
+    padding: $space24;
+    background: #fff;
+
+    @include breakpoints(xs) {
+        padding: $space16;
+    }
+
+    @include breakpoints(sm) {
+        padding: $space24;
+    }
+
+    @include breakpoints(md) {
+        padding: $space16;
+    }
+
+    @include breakpoints(lg) {
+        padding: $space24;
+    }
+
+    .event-form-card {
+        padding: $space24;
+        box-shadow: rgba(0, 0, 0, 0.059);
+        border: 1px solid #DDDDDD;
+        border-radius: $border-radius-12;
+
+        @include breakpoints(xs) {
+            padding: $space16;
+        }
+
+        @include breakpoints(sm) {
+            padding: $space16;
+        }
+
+        @include breakpoints(md) {
+            padding: $space24;
+        }
+
+        @include breakpoints(lg) {
+            padding: $space24;
+        }
+
+        .form-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @include breakpoints(xs) {
+                flex-direction: column;
+            }
+
+            @include breakpoints(sm) {
+                flex-direction: row;
+            }
+
+            @include breakpoints(md) {
+                flex-direction: row;
+            }
+
+            @include breakpoints(lg) {
+                flex-direction: row;
+            }
+
+            .invite-label {
+                align-self: flex-start;
+            }
+
+            .download-sample-link {
+                font-size: 14px;
+                font-weight: 500;
+                color: #5829CF;
+                text-decoration: underline;
+                cursor: pointer;
+                margin-top: $space16;
+
+                @include breakpoints(xs) {
+                    align-self: flex-start;
+                    margin-top: $space0;
+                    margin-bottom: $space8;
+                }
+
+                @include breakpoints(sm) {
+                    margin-top: $space16;
+                    margin-bottom: $space0;
+                }
+
+                @include breakpoints(md) {
+                    margin-top: $space24;
+                    margin-bottom: $space0;
+                }
+
+                @include breakpoints(lg) {
+                    margin-top: $space24;
+                    margin-bottom: $space0;
+                }
+            }
+        }
+    }
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        align-items: center;
+        gap: $space16;
+        padding-bottom: $space24;
+
+        @include breakpoints(xs) {
+            padding-bottom: $space16;
+        }
+
+        @include breakpoints(sm) {
+            padding-bottom: $space24;
+        }
+
+        @include breakpoints(md) {
+            padding-bottom: $space24;
+        }
+
+        @include breakpoints(lg) {
+            padding-bottom: $space24;
+        }
+
+        .add-event-title {
+            font-weight: $font-bold;
+            color: $text-color;
+            font-size: $font-size-28;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-22;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-28;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-20;
+            }
+        }
+
+        .MuiSvgIcon-root {
+            width: 24px;
+        }
+
+        .back-button {
+            color: $text-color;
+            font-size: $font-size-28;
+            font-weight: $font-bold;
+
+            @include breakpoints(md) {
+                font-size: $font-size-20;
+            }
+        }
+
+        .form-title {
+            color: $text-color;
+            font-weight: $font-bold;
+            margin: 0;
+        }
+    }
+
+    .media-upload-label {
+        cursor: pointer;
+        margin-bottom: 1rem;
+
+        .media-upload-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: $border-radius-8;
+            background-color: #DDDDDD29;
+            border: 1px dashed #DDDDDD;
+            cursor: pointer;
+            padding: $space32;
+        }
+
+        .media-upload-avatar {
+            width: 24px;
+            height: 24px;
+            background-color: transparent;
+            margin-bottom: $space4;
+        }
+
+        .media-upload-text {
+            font-size: $font-size-14;
+            color: $gray-text;
+
+            @include breakpoints(xs) {
+                font-size: $font-size-12;
+            }
+
+            @include breakpoints(sm) {
+                font-size: $font-size-14;
+            }
+
+            @include breakpoints(md) {
+                font-size: $font-size-14;
+            }
+
+            @include breakpoints(lg) {
+                font-size: $font-size-14;
+            }
+        }
+    }
+
+    .media-upload,
+    .invite-upload {
+
+        .upload-label {
+            color: $text-color;
+            padding-bottom: $space8;
+        }
+
+        .upload-box {
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            color: #888;
+            cursor: pointer;
+            transition: border-color 0.3s;
+
+            svg {
+                display: block;
+                margin: 0 auto 0.5rem;
+            }
+        }
+    }
+
+    .picker-input {
+        background-color: #fff;
+        border-radius: 12px;
+
+        .MuiOutlinedInput-root {
+            border-radius: 12px;
+            padding: 10px 14px;
+
+            .MuiSvgIcon-root {
+                font-size: 20px;
+            }
+
+            input {
+                padding-left: 8px;
+                color: #5f5f5f;
+            }
+        }
+    }
+
+    .send-on-wrapper {
+
+        .send-on-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            // margin-top: 1.5rem;
+        }
+    }
+
+    .custom-input {
+        color: $gray-text;
+        font-size: $font-size-14;
+
+        // Targets the internal MUI textarea
+        textarea {
+            max-height: 145px !important;
+            overflow-y: auto !important;
+            overflow-x: hidden;
+            white-space: pre-wrap;
+            word-break: break-word;
+            display: block !important; // force block to respect max height
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: $gray-text !important;
+            opacity: 1;
+        }
+    }
+
+    .custom-input-element {
+        color: $gray-text;
+        font-size: $font-size-14;
+
+        &::placeholder {
+            color: $gray-text;
+            opacity: 1;
+        }
+    }
+
+    .custom-location-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .send-on-options {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        @include breakpoints(xs) {
+            justify-content: center;
+        }
+
+        @include breakpoints(sm) {
+            justify-content: flex-start;
+        }
+
+        @include breakpoints(md) {
+            justify-content: flex-start;
+        }
+
+        @include breakpoints(lg) {
+            justify-content: flex-start;
+        }
+    }
+
+    .custom-checkbox {
+        color: $gray-text;
+
+        &.Mui-checked {
+            color: $primary-purple !important;
+        }
+    }
+
+    .form-actions {
+        width: 100%;
+        justify-content: flex-end;
+        // margin-top: 2rem;
+        display: flex;
+        gap: 16px;
+
+        .cancel-button {
+            border-radius: $border-radius-12;
+            border: 1px solid $primary-purple;
+            color: $primary-purple;
+            min-width: 120px;
+            font-weight: $font-bold;
+
+            @include breakpoints(md) {
+                font-size: $font-size-12;
+                padding: $space4 $space14;
+            }
+        }
+
+        .add-button {
+            min-width: 120px;
+            border-radius: $border-radius-12;
+            background-color: $primary-purple;
+            font-weight: $font-bold;
+
+            @include breakpoints(md) {
+                font-size: $font-size-12;
+                padding: $space4 $space14;
+            }
+        }
+    }
+
+    .mobile-view {
+        width: 100%;
+
+        @include breakpoints(xs) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @include breakpoints(sm) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @include breakpoints(md) {
+            display: block;
+        }
+    }
+}

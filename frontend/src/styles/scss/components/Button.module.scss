@@ -1,0 +1,97 @@
+@use '../variables.scss' as *;
+
+.full-width-button {
+    width: 100%;
+    background-color: $primary-purple !important;
+    color: $white-color !important;
+    font-size: $font-size-14;
+    font-weight: $font-bold;
+    padding: $space12;
+    border-radius: $border-radius-12 !important;
+    text-transform: none;
+    margin-bottom: $space16 !important;
+
+    @include breakpoints(xs) {
+      margin-bottom: $space0 !important;
+      font-size: 9px !important;
+    }
+
+     @include breakpoints(sm) {
+      margin-bottom: $space0 !important;
+      font-size: $font-size-12 !important;
+    }
+
+    @include breakpoints(md) {
+      margin-bottom: $space0 !important;
+      font-size: $font-size-14 !important;
+    }
+
+    @include breakpoints(lg){
+      margin-bottom: $space0 !important;
+      font-size: $font-size-14 !important;
+    }
+}
+
+.without-background-button {
+  border: 1px solid $primary-purple !important;
+  color: $primary-purple !important;
+  font-weight: $font-bold !important;
+  height: 43px !important;
+  border-radius: $border-radius-12 !important;
+  text-transform: none !important;
+
+  @include breakpoints(sm) {
+      font-weight: $font-semibold !important;
+      font-size: $font-size-12 !important;
+      padding: $space4 $space14 !important;
+      height: 38px !important;
+    }
+
+   @include breakpoints(md) {
+      font-weight: $font-semibold !important;
+      font-size: $font-size-14 !important;
+      padding: $space6 $space16 !important;
+      height: 43px !important;
+    }
+
+    @include breakpoints(lg) {
+      font-weight: $font-bold !important;
+      font-size: $font-size-14 !important;
+      padding: $space6 $space16 !important;
+      height: 43px !important;
+    }
+}
+
+.with-background-button {
+  background-color: $primary-purple !important;
+  border-radius: $border-radius-12 !important; 
+  font-weight: $font-bold !important;
+  height: 43px !important;
+  text-transform: none !important;
+
+   &:hover {
+      background-color: $primary-hover-purple !important;
+      box-shadow: none !important;
+    }
+
+    @include breakpoints(sm) {
+      font-weight: $font-semibold !important;
+      font-size: $font-size-12 !important;
+      padding: $space4 $space14 !important;
+      height: 38px !important;
+    }
+
+    @include breakpoints(md) {
+      font-weight: $font-semibold !important;
+      font-size: $font-size-14 !important;
+      padding: $space6 $space16 !important;
+      height: 43px !important;
+    }
+
+    @include breakpoints(lg) {
+      font-weight: $font-bold !important;
+      font-size: $font-size-14 !important;
+      padding: $space6 $space16 !important;
+      height: 43px !important;
+    }
+}

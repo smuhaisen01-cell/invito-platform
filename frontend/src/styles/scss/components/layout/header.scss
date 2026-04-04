@@ -1,0 +1,133 @@
+@use "../../variables.scss" as *;
+
+.header {
+  min-height: 70px;
+
+  .header-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: $space20 $space24;
+    position: fixed;
+    width: calc(100% - 20%);
+    z-index: 2;
+    max-height: 70px;
+    background-color: $bg-lightest-purple !important;
+    border-bottom: 1px solid $gray-border-light;
+
+    @include breakpoints(xs) {
+      width: 100%;
+      padding: $space20 $space12;
+    }
+
+    @include breakpoints(sm) {
+      width: 100%;
+      padding: $space20 $space12;
+    }
+
+     @include breakpoints(md) {
+      width: calc(100% - 20%);
+      padding: $space20 $space24;
+    }
+
+     @include breakpoints(lg) {
+      width: calc(100% - 20%);
+      padding: $space20 $space24;
+    }
+
+    .header-user-section {
+      display: flex;
+      align-items: center;
+      gap: $space8;
+
+      .header-avatar-container {
+        position: relative;
+        display: inline-block;
+      }
+
+      .header-avatar {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+      }
+
+      .hidden-file-input {
+        display: none;
+      }
+
+      .header-username {
+        font-size: $font-size-14;
+        font-weight: $font-semibold;
+      }
+
+      .header-icon-button {
+        background-color: transparent;
+        padding: $space0;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: transparent;
+          box-shadow: none;
+        }
+
+        svg {
+          font-size: $font-size-20;
+          color: $black-color;
+        }
+      }
+
+      .header-menu-list {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      .header-menu-item {
+        font-size: $font-size-14;
+        padding: $space12 $space20;
+        font-weight: $font-medium;
+        color: $text-color;
+        border-bottom: 1px solid #D9D9D9;
+
+        &:hover {
+          background-color: $primary-purple;
+          color: $white-color;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .header-menu-paper {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin-top: 8px;
+    overflow: hidden;
+    min-width: 180px;
+  }
+
+  .logout-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loader {
+      /* You can customize the loader here if needed */
+    }
+
+    .logout-text {
+      margin-left: 16px;
+      font-size: $font-size-20;
+      font-weight: $font-semibold;
+    }
+  }
+}

@@ -1,0 +1,98 @@
+@use "../../variables.scss" as *;
+
+.sidebar {
+  height: 100%;
+  background-color: $accent-light-purple;
+  position: fixed;
+  width: calc(100% - 80%);
+  top: 0;
+  left: 0;
+  padding: $space16;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // margin-bottom: $space16;
+
+    .sidebar-title {
+      font-size: $font-size-34;
+      font-weight: $font-bold;
+      padding: $space0 $space16;
+      margin-bottom: $space16;
+      color: $primary-purple;
+      text-align: left;
+    }
+
+    .close-btn {
+      color: #090415;
+      margin-bottom: 8px;
+    }
+  }
+
+  .sidebar-list {
+    padding: 0;
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      font-weight: $font-medium;
+      border-radius: $border-radius-8;
+      margin-bottom: $space8;
+      padding: $space10 $space16;
+      color: $text-color;
+      transition: $transition;
+
+      .sidebar-menu-text {
+        font-size: $font-size-14;
+        font-weight: $font-medium;
+      }
+
+      .sidebar-menu-text span {
+        @include breakpoints(md) {
+          font-size: 12px;
+        }
+
+        @include breakpoints(lg) {
+          font-size: 14px;
+        }
+      }
+
+      .sidebar-icon {
+        min-width: 32px;
+
+        img {
+          width: 20px;
+          height: 20px;
+          transition: $transition;
+        }
+      }
+
+      .MuiTypography-root {
+        font-size: $font-size-14;
+        font-weight: $font-medium;
+      }
+
+      &:hover,
+      &:focus,
+      &.active {
+        background-color: $primary-purple;
+        color: $white-color;
+        transition: $transition;
+
+        .sidebar-icon img {
+          filter: brightness(0) invert(1);
+          transition: $transition;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@use "../../variables.scss" as *;
+
+.header-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .sub-section-1 {
+        flex-shrink: 0;
+    }
+
+    .sub-section-2 {
+        overflow: auto;
+        background-color: $white-color;
+        flex-grow: 1;
+    }
+}

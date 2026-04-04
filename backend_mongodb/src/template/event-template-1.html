@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .email-wrapper {
+        max-width: 600px;
+        margin: 50px auto;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1.5px solid #e0e0e0;
+        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+      }
+
+      .content {
+        padding: 30px 25px;
+        text-align: center;
+      }
+
+      .title {
+        font-size: 26px;
+        color: #d63384;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .details {
+        text-align: left;
+        font-size: 15px;
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+
+      .details span {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .rsvp-highlight {
+        display: inline-block;
+        background-color: #5829cf;
+        padding: 12px 20px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+      }
+
+      .footer {
+        font-size: 13px;
+        color: #888;
+        text-align: center;
+        padding: 18px 12px;
+        background-color: #f4f4f4;
+        line-height: 1.6;
+      }
+
+      .footer a:hover {
+        color: #5829cf !important ;
+      }
+
+      .social-icons {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .social-icons img {
+        height: 25px;
+        margin: 0 5px;
+        vertical-align: middle;
+      }
+      /* Gmail-specific fixes */
+      @media screen and (max-width: 600px) {
+        .email-wrapper {
+          width: 100% !important;
+          margin: 0 !important;
+        }
+        
+        .header img {
+          max-height: 200px;
+        }
+        
+        .content {
+          padding: 20px 15px;
+        }
+      }
+
+      
+    </style>
+  </head>
+
+  <body>
+    <div class="email-wrapper">
+      <div class="header"  style="background-color: #ccb1bd; border-top-left-radius: 16px; border-top-right-radius: 16px;">
+        <img
+          src="{{image_url}}"
+          alt="Image Url"
+          style="
+            object-fit: cover;
+            display: block;
+            height:300px;
+            margin: 0 auto;
+            padding: 16px;
+            border-radius: 35px;
+          "
+        />
+      </div>
+      <div class="content">
+        <div class="title">{{title}}</div>
+        <div class="details" style="text-align: left">
+          <div style="white-space: pre-line">{{description}}</div>
+          <p
+            style="
+              font-size: 12px;
+              margin-top: 10px;
+              color: #888;
+              text-align: left;
+            "
+          >
+            {{footer}}
+          </p>
+        </div>
+        <a href="{{rsvp_link}}" class="rsvp-highlight" style="color: #fff"
+          >Book My Spot</a
+        >
+        <hr
+          style="
+            margin: 30px 0 15px 0;
+            border: none;
+            border-top: 1px solid #eee;
+          "
+        />
+        <div class="social-section">
+          <div class="social-icons">
+            <a
+              href="{{instagram_link}}"
+              target="_blank"
+              style="text-decoration: none; font-size: 18px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+                alt="Instagram"
+              />
+            </a>
+            <a
+              href="{{linkedin_link}}"
+              target="_blank"
+              style="text-decoration: none; font-size: 18px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png"
+                alt="LinkedIn"
+              />
+            </a>
+            <a
+              href="{{website_link}}"
+              target="_blank"
+              style="text-decoration: none; font-size: 18px"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/10453/10453141.png"
+                alt="Website"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          This email was sent by: <strong style="color: #888">NexPlat SA</strong
+          ><br />
+          Riyadh, Saudi Arabia<br />
+          <a href="mailto:info@nexplat.sa" style="color: #888"
+            >info@nexplat.sa</a
+          >, <a href="tel:+966503151125" style="color: #888">+966 50 315 1125</a
+          ><br />
+          <a href="{{unsubscribe_link}}" style="color: #2992cf"
+            >Subscription Center</a
+          >
+        </p>
+        <p style="font-size: 12px">
+          If the unsubscribe or subscription center link doesn't work, please
+          try a different browser.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

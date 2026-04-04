@@ -1,0 +1,427 @@
+@use "../../variables.scss" as *;
+
+.dashboard {
+  padding: $space24;
+
+  @include breakpoints(xs) {
+    padding: $space16;
+  }
+
+  @include breakpoints(sm) {
+    padding: $space16;
+  }
+
+  @include breakpoints(md) {
+    padding: $space16;
+  }
+
+  @include breakpoints(lg) {
+    padding: $space24;
+  }
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: $space24;
+
+    .dashboard-title {
+      font-size: $font-size-28;
+      font-weight: $font-bold;
+
+      @include breakpoints(xs) {
+        font-size: $font-size-22;
+        margin: auto;
+        padding-bottom: $space8;
+      }
+
+      @include breakpoints(sm) {
+        font-size: $font-size-28;
+        margin: auto;
+      }
+
+      @include breakpoints(md) {
+        font-size: $font-size-18;
+        margin: $space0;
+      }
+
+      @include breakpoints(lg) {
+        font-size: $font-size-28;
+        margin: $space0;
+      }
+    }
+
+    .dashboard-filters {
+      display: flex;
+      align-items: center;
+      gap: $space12;
+
+      @include breakpoints(xs) {
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @include breakpoints(sm) {
+        gap: 6px;
+        margin: auto;
+      }
+
+      @include breakpoints(md) {
+        gap: $space12;
+        margin: $space0;
+      }
+
+      @include breakpoints(lg) {
+        gap: $space12;
+        margin: $space0;
+      }
+
+      .filter-label {
+        font-size: $font-size-14;
+        font-weight: $font-medium;
+        color: $text-color;
+
+        @include breakpoints(sm) {
+          font-size: $font-size-10;
+        }
+
+        @include breakpoints(md) {
+          font-size: $font-size-12;
+        }
+
+        @include breakpoints(lg) {
+          font-size: $font-size-14;
+        }
+      }
+
+      .custom-select {
+        width: 180px;
+        background-color: $white-color;
+        border: 1px solid $gray-border-light;
+        border-radius: $border-radius-12;
+        font-size: $font-size-14;
+
+        .MuiSelect-select {
+          padding: 12px 16px;
+          font-weight: $font-medium;
+          color: $text-color;
+        }
+
+        &.active {
+          border-color: $black-color;
+        }
+      }
+
+      .custom-menu {
+        border-radius: $border-radius-12;
+        box-shadow: $box-shadow;
+        margin-top: 8px;
+        overflow: hidden;
+        padding: 0;
+
+        .custom-option {
+          font-size: $font-size-14;
+          padding: $space12 $space16;
+          font-weight: $font-medium;
+          color: $text-color;
+          background-color: $white-color;
+          cursor: pointer;
+
+          &:hover,
+          &.custom-selected {
+            background-color: $gray-bg-light;
+          }
+        }
+      }
+    }
+  }
+
+  .MuiInputBase-root {
+    @include breakpoints(md) {
+      padding: $space6 $space12;
+    }
+
+    @include breakpoints(lg) {
+      padding: $space10 $space14;
+    }
+  }
+
+  .dashboard-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space20;
+    margin-top: $space20;
+
+    @include breakpoints(sm) {
+      flex-direction: column;
+    }
+
+    @include breakpoints(md) {
+      flex-direction: row;
+    }
+
+    @include breakpoints(lg) {
+      flex-direction: row;
+    }
+
+    .dashboard-card {
+      background-color: $white-color;
+      border-radius: $border-radius-12;
+      box-shadow: $box-shadow;
+      border: 0.5px solid #DDDDDD;
+      padding: $space16;
+      flex: 1;
+      min-width: 280px;
+
+      @include breakpoints(xs) {
+        padding: $space10;
+      }
+
+      @include breakpoints(md) {
+        padding: $space10;
+        min-width: 213px;
+      }
+
+      @include breakpoints(lg) {
+        padding: $space16;
+        min-width: 280px;
+      }
+
+      &.card-horizontal {
+        display: flex;
+        align-items: center;
+
+        .card-icon {
+          width: 80px;
+          height: 80px;
+          background-color: $primary-purple-light;
+          border-radius: $border-radius-8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: $space16;
+
+          @include breakpoints(xs) {
+            width: 56px;
+            height: 56px;
+          }
+
+          @include breakpoints(md) {
+            width: 50px;
+            height: 50px;
+          }
+
+          @include breakpoints(lg) {
+            width: 80px;
+            height: 80px;
+          }
+
+          img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+
+            @include breakpoints(xs) {
+              width: 24px;
+              height: 24px;
+            }
+
+            @include breakpoints(md) {
+              width: 24px;
+              height: 24px;
+            }
+
+            @include breakpoints(lg) {
+              width: 30px;
+              height: 30px;
+            }
+          }
+        }
+
+        .card-content {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .card-title {
+            font-size: $font-size-18;
+            font-weight: $font-medium;
+            color: $gray-text;
+
+            @include breakpoints(xs) {
+              font-size: $font-size-14;
+            }
+
+            @include breakpoints(sm) {
+              font-size: $font-size-14;
+            }
+
+            @include breakpoints(md) {
+              font-size: $font-size-12;
+            }
+
+            @include breakpoints(lg) {
+              font-size: $font-size-14;
+            }
+          }
+
+          .card-subtitle {
+            font-size: $font-size-32;
+            font-weight: $font-bold;
+
+            @include breakpoints(xs) {
+              font-size: $font-size-18;
+            }
+
+            @include breakpoints(sm) {
+              font-size: $font-size-22;
+            }
+
+            @include breakpoints(md) {
+              font-size: $font-size-20;
+            }
+
+            @include breakpoints(lg) {
+              font-size: $font-size-32;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .dashboard-bar-chart {
+    background-color: $white-color;
+    margin-top: $space24;
+    padding: $space24;
+    border: 1px solid $gray-border;
+    box-shadow: $box-shadow;
+    border-radius: $border-radius-12;
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoints(xs) {
+      margin-top: $space16;
+    }
+
+    @include breakpoints(md) {
+      margin-top: $space24;
+    }
+
+    @include breakpoints(lg) {
+      margin-top: $space24;
+    }
+
+    .bar-chart-title {
+      font-size: $font-size-32;
+      font-weight: $font-bold;
+      color: $black-color;
+      margin-bottom: $space16;
+
+      @include breakpoints(xs) {
+        font-size: $font-size-22;
+      }
+
+      @include breakpoints(sm) {
+        font-size: $font-size-28;
+      }
+
+      @include breakpoints(md) {
+        font-size: $font-size-18;
+      }
+
+      @include breakpoints(lg) {
+        font-size: $font-size-32;
+      }
+    }
+
+    .dashboard-chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: $space32;
+      align-items: flex-start;
+
+      .custom-legend {
+        display: flex;
+        gap: $space12;
+
+        @include breakpoints(xs) {
+          flex-wrap: wrap;
+        }
+
+        .legend-item {
+          display: flex;
+          align-items: center;
+          gap: $space8;
+
+          .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+          }
+
+          .legend-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: $black-color;
+          }
+        }
+      }
+
+      .barchart-scroll-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        position: relative;
+
+        // Enable scroll on all browsers
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: auto;
+        -ms-overflow-style: auto;
+
+        &::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba(0, 0, 0, 0.2);
+          border-radius: 4px;
+        }
+
+        .barchart-inner {
+          width: max-content;
+          min-width: 600px;
+        }
+      }
+
+      @include breakpoints(sm) {
+        .barchart-scroll-wrapper {
+          overflow-x: hidden;
+
+          .barchart-inner {
+            width: 100%;
+          }
+        }
+      }
+
+      .barchart {
+        width: 100%;
+
+        .MuiChartsAxis-line,
+        .MuiChartsAxis-tick {
+          stroke: transparent !important;
+        }
+
+        .MuiBarElement-root {
+          width: 10px !important;
+          margin: 0 !important;
+          padding: 0;
+          clip-path: inset(0 round 19px);
+        }
+      }
+    }
+  }
+}

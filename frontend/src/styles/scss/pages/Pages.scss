@@ -1,0 +1,11 @@
+@use './auth/Login.module.scss';
+@use './auth/ForgotPassword.module.scss';
+@use './auth/ResetPassword.module.scss';
+@use './auth/SignUp.module.scss';
+@use '../pages/layout/mainLayout.scss';
+@use './sideNav/dashboardOnBoardingPopup.scss';
+@use './sideNav/dashboard.scss';
+@use './sideNav/customDatePickerSelector.scss';
+@use'./sideNav/event.scss';
+@use './sideNav/addEvent.scss';
+@use './sideNav/mobilePreview.scss';

@@ -1,0 +1,486 @@
+@use "../../variables.scss" as *;
+@use "sass:color";
+
+
+.events-page {
+  background-color: #fff;
+  padding: $space24;
+
+  @include breakpoints(xs) {
+    padding: $space16;
+  }
+
+  @include breakpoints(sm) {
+    padding: $space16;
+  }
+
+  @include breakpoints(md) {
+    padding: $space16;
+  }
+
+  @include breakpoints(lg) {
+    padding: $space24;
+  }
+
+  .events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .events-title {
+      font-weight: $font-bold;
+      font-size: $font-size-28;
+
+      @include breakpoints(sm) {
+        font-size: $font-size-28;
+      }
+
+      @include breakpoints(md) {
+        font-size: $font-size-20;
+      }
+
+      @include breakpoints(lg) {
+        font-size: $font-size-28;
+      }
+    }
+  }
+
+  .event-card {
+    border-radius: $space12 !important;
+    overflow: hidden;
+    padding: $space12;
+    border: 1px solid #DDDDDD;
+    box-shadow: $card-box-shadow;
+    transition: 0.3s ease;
+
+    .event-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: $border-radius-12;
+
+      @include breakpoints(md) {
+        height: 130px;
+      }
+
+      @include breakpoints(lg) {
+        height: 160px;
+      }
+    }
+
+    .event-card-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-items: stretch;
+      gap: 1rem;
+
+      @include breakpoints(xs) {
+        gap: 8px;
+      }
+
+      @include breakpoints(sm) {
+        gap: 6px;
+      }
+
+      @include breakpoints(md) {
+        gap: 8px;
+      }
+
+      @include breakpoints(lg) {
+        gap: 1rem;
+      }
+
+    }
+
+    .event-meta {
+      .event-time {
+        display: flex;
+        flex-direction: column; // increase time and date spacing and increase font size
+        align-items: flex-start; // align time and date to the left
+        .event-time-text {
+          font-weight: 600; // increase font weight
+          font-size: $font-size-10; // consider using rem for scalability
+          color: $text-color;
+          line-height: 1.4; // improves readability
+          margin-bottom: 0.25rem; // adds spacing between time and date
+          margin-top: 0.30rem; // adds spacing between time and date
+        }
+    
+        .event-date-text {
+          font-size: 0.75rem; // increase font size
+          color: #666; // slightly darker for better contrast
+          font-weight: 400; // increase font weight
+          line-height: 1.3; // improve readability
+          margin-bottom: 0.25rem; // adds spacing between time and date
+        }
+      }
+    }
+    
+
+    .event-date-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-right: $space12;
+      border-right: 1px dashed #DDDDDD;
+      min-width: 60px;
+
+      @include breakpoints(xs) {
+        padding-right: $space8;
+        min-width: 40px;
+      }
+
+      @include breakpoints(sm) {
+        padding-right: $space8;
+        min-width: 40px;
+      }
+
+      @include breakpoints(md) {
+        padding-right: $space6;
+        min-width: 40px;
+      }
+
+      @include breakpoints(lg) {
+        padding-right: $space12;
+        min-width: 60px;
+      }
+
+      .event-time-text {
+        font-size: $font-size-10;
+        color: $text-color;
+      }
+
+      .event-month-text {
+        font-size: $font-size-14;
+        color: $text-color;
+
+        @include breakpoints(md) {
+          font-size: $font-size-11;
+        }
+
+        @include breakpoints(lg) {
+          font-size: $font-size-14;
+        }
+      }
+
+      .event-day-text {
+        font-size: $font-size-16;
+        font-weight: $font-bold;
+        color: $primary-purple;
+        margin-top: $space4;
+
+        @include breakpoints(md) {
+          font-size: $font-size-12;
+        }
+
+        @include breakpoints(lg) {
+          font-size: $font-size-16;
+        }
+      }
+
+      .MuiIconButton-root {
+          background-color: $accent-light-purple;
+          color: $white-color;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+
+          @include breakpoints(md) {
+            width: 24px;
+            height: 24px;
+          }
+
+          @include breakpoints(lg) {
+            width: 32px;
+            height: 32px;
+          }
+
+          .MuiSvgIcon-root {
+            @include breakpoints(md) {
+              width: 16px;
+              height: 16px;
+            }
+
+            @include breakpoints(lg) {
+              width: 24px;
+              height: 24px;
+            }
+          }
+
+          &:hover {
+            background-color: color.adjust($accent-light-purple, $lightness: -10%);
+          }
+        }
+    }
+
+    .title-menu {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
+
+      .event-title {
+        font-size: $font-size-16;
+        font-weight: $font-semibold;
+        color: $text-color;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        max-width: 170px;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @include breakpoints(md) {
+          font-size: $font-size-12;
+        }
+
+        @include breakpoints(lg) {
+          font-size: $font-size-16;
+        }
+      }
+    }
+
+    .event-description {
+      margin-top: 0.25rem;
+      font-size: $font-size-14;
+      color: $gray-text;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: 36px;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
+
+      @include breakpoints(sm) {
+        font-size: $font-size-12;
+      }
+
+      @include breakpoints(md) {
+        font-size: $font-size-11;
+      }
+
+      @include breakpoints(lg) {
+        font-size: $font-size-14;
+      }
+    }
+
+    .event-contact-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: $space24;
+
+      @include breakpoints(md) {
+        margin-top: 0.6rem;
+        gap: 6px;
+      }
+
+      @include breakpoints(lg) {
+        margin-top: $space24;
+        gap: 8px;
+      }
+
+      button {
+        background: linear-gradient(135deg, #4e8fe466, #886bf2a3);
+        color: #fff;
+        padding: 6px;
+        min-width: 30px;
+        min-height: 32px;
+      }
+
+      .event-attendees-count {
+        padding-right: $space8;
+      }
+    }
+
+
+    .MuiCardMedia-root {
+      object-fit: cover;
+    }
+
+    .event-meta {
+      .event-time {
+
+        .event-time-text,
+        .event-date-text {
+          font-weight: $font-semibold;
+          color: $gray-text;
+        }
+      }
+    }
+
+    .title-menu {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
+
+      .event-title {
+        font-weight: $font-bold;
+        font-size: $font-size-16;
+        color: $text-color;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        max-width: 170px;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @include breakpoints(md) {
+          font-size: $font-size-12;
+        }
+
+        @include breakpoints(md) {
+          font-size: $font-size-16;
+        }
+      }
+    }
+
+    .event-description {
+      color: $gray-text;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
+
+      @include breakpoints(md) {
+        min-height: 38px;
+      }
+
+      @include breakpoints(lg) {
+        min-height: 40px;
+      }
+    }
+
+    .MuiCardContent-root {
+      padding: $space12 $space0 !important;
+
+      .event-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $space4;
+
+        .event-time {
+          display: flex;
+          flex-direction: column;
+          color: $text-color;
+        }
+
+        .event-day-chip {
+          background-color: #ede9fe;
+          color: $primary-purple;
+          font-weight: bold;
+          height: 24px;
+        }
+      }
+
+      .event-attendees {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+
+        .avatars {
+          display: flex;
+
+          .avatar {
+            width: 28px;
+            height: 28px;
+            border: 2px solid white;
+            margin-left: -8px;
+
+            &:first-child {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+
+      .event-contact-icons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .icons {
+          display: flex;
+          gap: 8px;
+
+          @include breakpoints(md) {
+            gap: 4px;
+          }
+
+          @include breakpoints(lg) {
+            gap: 8px;
+          }
+        }
+
+        .MuiIconButton-root {
+          background-color: $accent-light-purple;
+          color: $white-color;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+
+          @include breakpoints(md) {
+            width: 24px;
+            height: 24px;
+          }
+
+          @include breakpoints(lg) {
+            width: 32px;
+            height: 32px;
+          }
+
+          .MuiSvgIcon-root {
+            @include breakpoints(md) {
+              width: 16px;
+              height: 16px;
+            }
+
+            @include breakpoints(lg) {
+              width: 24px;
+              height: 24px;
+            }
+          }
+
+          &:hover {
+            background-color: color.adjust($accent-light-purple, $lightness: -10%);
+          }
+        }
+
+        .event-attendees-count {
+          font-size: $font-size-14;
+          font-weight: $font-semibold;
+          color: $text-color;
+
+          @include breakpoints(sm) {
+            font-size: $font-size-12;
+          }
+
+          @include breakpoints(md) {
+            font-size: $font-size-12;
+          }
+
+          @include breakpoints(lg) {
+            font-size: $font-size-14;
+          }
+        }
+      }
+    }
+  }
+}
