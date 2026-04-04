@@ -125,14 +125,28 @@ exports.create = async (req, res) => {
         </body>
       </html>
     `;
-    await sendEmail(
-      newUser.email,
-      "Verify your Invito account",
-      `Hi ${newUser.name},\n\nPlease verify your account: ${verificationUrl}`,
-      html
-    );
+    let emailDelivery = { sent: true };
+    try {
+      await sendEmail(
+        newUser.email,
+        "Verify your Invito account",
+        `Hi ${newUser.name},\n\nPlease verify your account: ${verificationUrl}`,
+        html
+      );
+    } catch (emailError) {
+      if (emailError.message === "Mailgun configuration is missing") {
+        emailDelivery = {
+          sent: false,
+          reason: "mail_not_configured",
+        };
+        console.warn(
+          `Mailgun is not configured, so the verification email to ${newUser.email} was skipped`
+        );
+      } else {
+        throw emailError;
+      }
+    }
 
-    // For now, return the token in the response (in production, send via email)
     res.status(201).json({
       _id: newUser._id,
       email: newUser.email,
@@ -140,6 +154,7 @@ exports.create = async (req, res) => {
       emailVerify: newUser.emailVerify,
       signupType: newUser.signupType,
       verificationToken,
+      emailDelivery,
     });
   } catch (error) {
     console.error("Account creation error:", error);
