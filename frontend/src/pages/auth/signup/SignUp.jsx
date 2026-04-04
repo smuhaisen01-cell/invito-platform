@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
-import { createAccount, googleSignup } from "../../../services/auth";
+import { createAccount, googleSignup, verifyEmail } from "../../../services/auth";
 import BottomLeft from "../../../../public/assets/images/bgcircle.png";
 import TopRight from "../../../../public/assets/images/bgtopcircle.png";
 import { GoogleLogin } from "@react-oauth/google";
@@ -81,6 +81,25 @@ const Signup = () => {
 
     try {
       const userData = await createAccount({ name, email, password });
+
+      if (userData?.verificationToken && userData?.emailDelivery?.sent === false) {
+        const verifiedUser = await verifyEmail(userData.verificationToken);
+
+        localStorage.setItem("authToken", verifiedUser.authorizationToken);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            userId: verifiedUser.userId,
+            email: verifiedUser.email,
+          })
+        );
+        localStorage.setItem("userId", verifiedUser.userId);
+        localStorage.setItem("showOnboarding", "true");
+
+        setSuccess("Account created successfully. Redirecting to your dashboard...");
+        setTimeout(() => navigate("/dashboard"), 1200);
+        return;
+      }
 
       setSuccess("Account created! Please check your email and verify your account.");
       setAwaitingVerification(true);
