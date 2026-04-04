@@ -11,11 +11,6 @@ const MOYASAR_SECRET_KEY = process.env.MOYASAR_SECRET_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 const IS_TEST_MODE = process.env.NODE_ENV === "local";
 
-if (!MOYASAR_SECRET_KEY || !FRONTEND_URL) {
-  console.error('[moyasarRoutes] Missing required environment variables: MOYASAR_SECRET_KEY or FRONTEND_URL');
-  process.exit(1);
-}
-
 // Middleware
 router.use(cors());
 router.use(express.json());
@@ -253,6 +248,11 @@ async function fetchUsersForRenewal() {
 
 // Cron job
 function startAutoPaymentCron() {
+  if (!MOYASAR_SECRET_KEY || !FRONTEND_URL) {
+    console.warn('[autoPaymentCron] Skipping auto-payment cron because MOYASAR_SECRET_KEY or FRONTEND_URL is missing');
+    return;
+  }
+
   cron.schedule('* * * * *', async () => {
     console.log('[autoPaymentCron] Running auto-payment check at', new Date().toISOString());
 

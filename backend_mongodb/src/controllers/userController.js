@@ -4,7 +4,6 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const FormData = require('form-data');
 const Mailgun = require('mailgun.js');
-const mailgun = new Mailgun(FormData);
 const axios = require("axios");
 
 exports.getMe = (req, res) => {
@@ -123,12 +122,18 @@ const inviteEmailTemplate = (name, role, token, inviterId, inviterName = 'Invito
 };
 
 
-// Initialize Mailgun
-const mg = mailgun.client({
-  username: process.env.MAILGUN_USERNAME || 'api',
-  key: process.env.MAILGUN_API_KEY,
-  url: process.env.MAILGUN_URL || 'https://api.mailgun.net', 
-});
+function getMailgunClient() {
+  if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+    return null;
+  }
+
+  const mailgun = new Mailgun(FormData);
+  return mailgun.client({
+    username: process.env.MAILGUN_USERNAME || 'api',
+    key: process.env.MAILGUN_API_KEY,
+    url: process.env.MAILGUN_URL || 'https://api.mailgun.net',
+  });
+}
 
 exports.sendInvite = async (req, res) => {
   const { name, role, email } = req.body;
@@ -153,15 +158,18 @@ exports.sendInvite = async (req, res) => {
     const token = jwt.sign({ id: user._id, type: 'invite' }, process.env.JWT_SECRET);
     console.log('inviterId: ' + inviterId);
 
-    // Send invite email with token link using Mailgun
-    await mg.messages.create(process.env.MAILGUN_DOMAIN, {
-      from: `Invito Team <${process.env.MAILGUN_EMAIL || 'no-reply@yourdomain.com'}>`,
-      to: email,
-      subject: `You're invited to Invito as ${role}`,
-      html: inviteEmailTemplate(name, role, token, inviterId),
-    });
-
-    console.log(`Email sent successfully to ${email} for role ${role} with token ${token}`);
+    const mailgunClient = getMailgunClient();
+    if (mailgunClient) {
+      await mailgunClient.messages.create(process.env.MAILGUN_DOMAIN, {
+        from: `Invito Team <${process.env.MAILGUN_EMAIL || 'no-reply@yourdomain.com'}>`,
+        to: email,
+        subject: `You're invited to Invito as ${role}`,
+        html: inviteEmailTemplate(name, role, token, inviterId),
+      });
+      console.log(`Email sent successfully to ${email} for role ${role} with token ${token}`);
+    } else {
+      console.warn(`Mailgun is not configured, so the invite email to ${email} was skipped`);
+    }
 
     return res.status(200).json({ success: true, message: 'Invitation sent successfully' });
   } catch (error) {

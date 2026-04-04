@@ -8,18 +8,29 @@ const { htmlToText } = require("html-to-text");
 const STATIC_IMAGE_URL =
   "https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg";
 
-const mailgun = new Mailgun(formData);
 const config = require("../config/mailgunConfig");
 const emailTemplateConfig = require("../config/emailTemplateConfig");
 
-const mg = mailgun.client({
-  username: config.mailgun.username,
-  key: config.mailgun.apiKey,
-});
+function getMailgunClient() {
+  if (!config.mailgun.apiKey || !config.mailgun.domain) {
+    return null;
+  }
+
+  const mailgun = new Mailgun(formData);
+  return mailgun.client({
+    username: config.mailgun.username,
+    key: config.mailgun.apiKey,
+  });
+}
 
 // Centralized email sending function
 const sendEmail = async (to, subject, html, text = null) => {
   try {
+    const mailgunClient = getMailgunClient();
+    if (!mailgunClient) {
+      throw new Error("Mailgun configuration is missing");
+    }
+
     const data = {
       from: `${config.mailgun.fromName} <${config.mailgun.email}>`,
       to,
@@ -27,7 +38,7 @@ const sendEmail = async (to, subject, html, text = null) => {
       html,
       text: text || htmlToText(html),
     };
-    const result = await mg.messages.create(config.mailgun.domain, data);
+    const result = await mailgunClient.messages.create(config.mailgun.domain, data);
     return result;
   } catch (error) {
     console.error("Error sending email:", {

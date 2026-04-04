@@ -7,14 +7,6 @@ const Event = require("../models/Event"); // Adjust based on your model imports
 const Contact = require("../models/Contact"); // Adjust based on your model imports
 
 // Initialize Mailgun client
-const mailgun = new Mailgun(FormData);
-const mg = mailgun.client({
-  username: process.env.MAILGUN_USERNAME || "api",
-  key: process.env.MAILGUN_API_KEY,
-  url: process.env.MAILGUN_URL || "https://api.mailgun.net",
-});
-
-// Validate environment variables at startup
 const requiredEnvVars = [
   "MAILGUN_API_KEY",
   "MAILGUN_DOMAIN",
@@ -22,11 +14,19 @@ const requiredEnvVars = [
   "WHATSAPP_TOKEN",
   "FRONTEND_URL",
 ];
-requiredEnvVars.forEach((envVar) => {
-  if (!process.env[envVar]) {
-    throw new Error(`${envVar} environment variable is missing`);
+
+function getMailgunClient() {
+  if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+    return null;
   }
-});
+
+  const mailgun = new Mailgun(FormData);
+  return mailgun.client({
+    username: process.env.MAILGUN_USERNAME || "api",
+    key: process.env.MAILGUN_API_KEY,
+    url: process.env.MAILGUN_URL || "https://api.mailgun.net",
+  });
+}
 
 // Format WhatsApp caption
 function formatWhatsAppCaption(event, eventDateTimeSaudi) {
@@ -53,6 +53,12 @@ function formatEventDateTimeToSaudi(date) {
 
 
 async function startReminderCron() {
+  const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
+  if (missingEnvVars.length > 0) {
+    console.warn(`[reminderCron] Skipping reminder cron because required environment variables are missing: ${missingEnvVars.join(", ")}`);
+    return;
+  }
+
   cron.schedule(
     "0 * * * *", // every minute (adjust to your preferred schedule)
     async () => {
@@ -233,7 +239,12 @@ async function sendQREmail(contact, event) {
       contentType: "multipart/related",
     };
 
-    const result = await mg.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
+    const mailgunClient = getMailgunClient();
+    if (!mailgunClient) {
+      throw new Error("Mailgun configuration is missing");
+    }
+
+    const result = await mailgunClient.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
     console.log(`QR code email sent to ${contact.email}: ${result.id}`);
     return result;
   } catch (error) {

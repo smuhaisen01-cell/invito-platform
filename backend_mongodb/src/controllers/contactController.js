@@ -6,17 +6,18 @@ const FormData = require("form-data");
 const Mailgun = require("mailgun.js");
 const cron = require("node-cron");
 const { STATIC_IMAGE_URL } = require("../services/mailgunService");
-// Initialize Mailgun client
-const mailgun = new Mailgun(FormData);
-const mg = mailgun.client({
-  username: process.env.MAILGUN_USERNAME || "api",
-  key: process.env.MAILGUN_API_KEY,
-  url: process.env.MAILGUN_URL || "https://api.mailgun.net",
-});
 
-// Validate required environment variables at startup
-if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
-  throw new Error("Mailgun configuration is missing");
+function getMailgunClient() {
+  if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+    return null;
+  }
+
+  const mailgun = new Mailgun(FormData);
+  return mailgun.client({
+    username: process.env.MAILGUN_USERNAME || "api",
+    key: process.env.MAILGUN_API_KEY,
+    url: process.env.MAILGUN_URL || "https://api.mailgun.net",
+  });
 }
 
 // Create a new contact
@@ -194,7 +195,12 @@ async function sendQREmail(contact, event) {
       ],
     };
 
-    const result = await mg.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
+    const mailgunClient = getMailgunClient();
+    if (!mailgunClient) {
+      throw new Error("Mailgun configuration is missing");
+    }
+
+    const result = await mailgunClient.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
     console.log(`QR code email sent to ${contact.email}: ${result.id}`);
     return result;
   } catch (error) {
@@ -258,7 +264,12 @@ async function sendMailgunEmail(to, subject, html, attachments = []) {
       })),
     };
 
-    const result = await mg.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
+    const mailgunClient = getMailgunClient();
+    if (!mailgunClient) {
+      throw new Error("Mailgun configuration is missing");
+    }
+
+    const result = await mailgunClient.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
     console.log(`Email sent to ${to}: ${result.id}`);
     return result;
   } catch (error) {
