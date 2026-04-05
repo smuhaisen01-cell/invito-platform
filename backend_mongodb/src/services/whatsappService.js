@@ -155,7 +155,7 @@ async function createEventTemplate({
     const whatsappPayload = {
       name: `event_${Date.now()}`,
       language: 'en',
-      category: 'MARKETING',
+      category: 'UTILITY',
       messaging_product: 'whatsapp',
       components
     };
