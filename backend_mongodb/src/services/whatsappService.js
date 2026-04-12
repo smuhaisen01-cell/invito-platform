@@ -220,9 +220,16 @@ async function createEventTemplate({
   }
 }
 
-async function sendWhatsAppMessage({ to, templateName, languageCode = 'en', mediaId, imageUrl }) {
+async function sendWhatsAppMessage({
+  to,
+  templateName,
+  languageCode = 'en',
+  mediaId,
+  imageUrl,
+  bodyParameters = [],
+}) {
   try {
-    console.log('msg->'+to, templateName, languageCode, mediaId, imageUrl);
+    console.log('msg->'+to, templateName, languageCode, mediaId, imageUrl, bodyParameters);
     
     const components = [];
 
@@ -242,6 +249,16 @@ async function sendWhatsAppMessage({ to, templateName, languageCode = 'en', medi
           type: 'image',
           image: { link: imageUrl }
         }]
+      });
+    }
+
+    if (bodyParameters.length > 0) {
+      components.push({
+        type: 'body',
+        parameters: bodyParameters.map((value) => ({
+          type: 'text',
+          text: value == null ? '' : String(value),
+        })),
       });
     }
 

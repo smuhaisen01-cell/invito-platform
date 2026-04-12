@@ -34,6 +34,27 @@ function shouldSendEmail(event, contact) {
   return event.emailSent && contact.email && isValidEmail(contact.email);
 }
 
+function formatWhatsAppEventDate(value) {
+  if (!value) {
+    return '';
+  }
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return String(value);
+  }
+
+  return parsed.toLocaleString('en-US', {
+    timeZone: 'Asia/Riyadh',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
 async function sendWhatsAppToContact(event, contact) {
   try {
     console.log(`📱 Preparing WhatsApp for ${contact.number}`);
@@ -42,6 +63,12 @@ async function sendWhatsAppToContact(event, contact) {
       to: contact.number,
       templateName: event?.whatsapp?.templateName,
       languageCode: event?.whatsapp?.languageCode || 'en',
+      bodyParameters: [
+        contact.name,
+        event.title,
+        formatWhatsAppEventDate(event.eventDateTime),
+        event.location,
+      ],
       imageUrl: process.env.NODE_ENV =='local' ? STATIC_IMAGE_URL : event.whatsapp.imageUrl  , // Using static image
      
     });
