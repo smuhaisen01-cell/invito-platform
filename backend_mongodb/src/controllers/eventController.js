@@ -322,6 +322,7 @@ exports.createEvent = async (req, res) => {
         event.whatsapp = {
           templateId: template.templateId,
           templateName: template.templateName,
+          languageCode: template.languageCode || "en",
           status: template.status,
           mediaId: template.mediaId,
           imageUrl,

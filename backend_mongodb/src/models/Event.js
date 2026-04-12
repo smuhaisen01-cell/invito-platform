@@ -21,6 +21,7 @@ const eventSchema = new mongoose.Schema({
   whatsapp: {
     templateName: { type: String },
     templateId: { type: String },
+    languageCode: { type: String },
     status: { type: String, enum: ['PENDING', 'APPROVED', 'REJECTED'] },
     mediaId: { type: String },
     imageUrl: { type: String },

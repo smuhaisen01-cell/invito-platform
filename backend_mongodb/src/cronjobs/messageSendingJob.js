@@ -41,6 +41,7 @@ async function sendWhatsAppToContact(event, contact) {
     await sendWhatsAppMessage({
       to: contact.number,
       templateName: event?.whatsapp?.templateName,
+      languageCode: event?.whatsapp?.languageCode || 'en',
       imageUrl: process.env.NODE_ENV =='local' ? STATIC_IMAGE_URL : event.whatsapp.imageUrl  , // Using static image
      
     });

@@ -12,6 +12,19 @@ function generateRandomDelay(minMs = DELAY_MIN_MS, maxMs = DELAY_MAX_MS) {
   return Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
 }
 
+function getReusableEventTemplateConfig() {
+  const templateName = process.env.WHATSAPP_EVENT_TEMPLATE_NAME;
+  if (!templateName) {
+    return null;
+  }
+
+  return {
+    templateName,
+    languageCode: process.env.WHATSAPP_EVENT_TEMPLATE_LANGUAGE || 'en',
+    status: 'APPROVED',
+  };
+}
+
 async function getTemplateDetails(templateName) {
   try {
     const response = await axios.get(
@@ -96,6 +109,21 @@ async function createEventTemplate({
   contactId
 }) {
   try {
+    const reusableTemplate = getReusableEventTemplateConfig();
+    if (reusableTemplate) {
+      console.log(`Using reusable WhatsApp template: ${reusableTemplate.templateName}`);
+      return {
+        success: true,
+        message: 'Using pre-approved reusable WhatsApp template',
+        status: reusableTemplate.status,
+        templateName: reusableTemplate.templateName,
+        templateId: null,
+        mediaId: null,
+        hasButtons: true,
+        languageCode: reusableTemplate.languageCode,
+      };
+    }
+
     let mediaId;
     if (imageFile) {
       mediaId = await uploadImageToWhatsApp(imageFile);
@@ -183,7 +211,8 @@ async function createEventTemplate({
       templateName: whatsappPayload.name,
       templateId: response.data.id,
       mediaId,
-      hasButtons: components.some(c => c.type === 'BUTTONS')
+      hasButtons: components.some(c => c.type === 'BUTTONS'),
+      languageCode: whatsappPayload.language,
     };
   } catch (err) {
     console.error('WhatsApp Template Service Error:', err.response?.data || err.message);
@@ -251,5 +280,6 @@ module.exports = {
   uploadImageToWhatsApp,
   createEventTemplate,
   sendWhatsAppMessage,
-  getTemplateDetails
+  getTemplateDetails,
+  getReusableEventTemplateConfig,
 };
