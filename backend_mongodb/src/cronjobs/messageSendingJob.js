@@ -63,6 +63,7 @@ async function sendWhatsAppToContact(event, contact) {
       to: contact.number,
       templateName: event?.whatsapp?.templateName,
       languageCode: event?.whatsapp?.languageCode || 'en',
+      bodyParameterNames: event?.whatsapp?.bodyParameterNames || [],
       bodyParameters: [
         contact.name,
         event.title,

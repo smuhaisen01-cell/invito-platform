@@ -323,6 +323,7 @@ exports.createEvent = async (req, res) => {
           templateId: template.templateId,
           templateName: template.templateName,
           languageCode: template.languageCode || "en",
+          bodyParameterNames: template.bodyParameterNames || [],
           status: template.status,
           mediaId: template.mediaId,
           imageUrl,

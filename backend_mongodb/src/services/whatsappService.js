@@ -21,6 +21,12 @@ function getReusableEventTemplateConfig() {
   return {
     templateName,
     languageCode: process.env.WHATSAPP_EVENT_TEMPLATE_LANGUAGE || 'en',
+    bodyParameterNames: [
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_1 || 'guest_name',
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_2 || 'event_title',
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_3 || 'event_date',
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_4 || 'event_location',
+    ],
     status: 'APPROVED',
   };
 }
@@ -121,6 +127,7 @@ async function createEventTemplate({
         mediaId: null,
         hasButtons: true,
         languageCode: reusableTemplate.languageCode,
+        bodyParameterNames: reusableTemplate.bodyParameterNames,
       };
     }
 
@@ -227,6 +234,7 @@ async function sendWhatsAppMessage({
   mediaId,
   imageUrl,
   bodyParameters = [],
+  bodyParameterNames = [],
 }) {
   try {
     console.log('msg->'+to, templateName, languageCode, mediaId, imageUrl, bodyParameters);
@@ -255,10 +263,19 @@ async function sendWhatsAppMessage({
     if (bodyParameters.length > 0) {
       components.push({
         type: 'body',
-        parameters: bodyParameters.map((value) => ({
-          type: 'text',
-          text: value == null ? '' : String(value),
-        })),
+        parameters: bodyParameters.map((value, index) => {
+          const parameter = {
+            type: 'text',
+            text: value == null ? '' : String(value),
+          };
+
+          const parameterName = bodyParameterNames[index];
+          if (parameterName) {
+            parameter.parameter_name = parameterName;
+          }
+
+          return parameter;
+        }),
       });
     }
 

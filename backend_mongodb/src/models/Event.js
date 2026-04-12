@@ -22,6 +22,7 @@ const eventSchema = new mongoose.Schema({
     templateName: { type: String },
     templateId: { type: String },
     languageCode: { type: String },
+    bodyParameterNames: [{ type: String }],
     status: { type: String, enum: ['PENDING', 'APPROVED', 'REJECTED'] },
     mediaId: { type: String },
     imageUrl: { type: String },

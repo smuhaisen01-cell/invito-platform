@@ -80,14 +80,14 @@ app.use('/api/payments',payments);
 
 // --- End merged router logic ---
 if (isProduction) {
+  const frontendDistPath = path.join(__dirname, '../frontend/dist');
+  if (fs.existsSync(frontendDistPath)) {
+    app.use(express.static(frontendDistPath));
 
-  
-  // Serve static files from the dist folder
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-  });
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(frontendDistPath, 'index.html'));
+    });
+  }
 }
 
 // --- Begin merged cronjob loader logic (from app.js) ---
