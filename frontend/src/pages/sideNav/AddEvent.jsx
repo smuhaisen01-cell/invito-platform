@@ -4,7 +4,7 @@ import {
     TextField, Typography, InputLabel, InputBase, InputAdornment, Avatar
 } from '@mui/material';
 import { styled } from "@mui/system";
-import { ArrowBack } from '@mui/icons-material';
+import { AddCircleOutline, ArrowBack, DeleteOutline } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import  { toast } from 'react-toastify';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -29,6 +29,12 @@ const CustomSelectInput = styled(InputBase)(() => ({
     fontWeight: 500,
     backgroundColor: "#fff",
 }));
+
+const createEmptyInvitee = () => ({
+    name: '',
+    number: '',
+    email: '',
+});
 
 const AddEvent = () => {
     const { id } = useParams();
@@ -56,6 +62,8 @@ const AddEvent = () => {
     const [eventValue, setEventValue] = useState(null);
     const [open, setOpen] = useState(false);
     const [eventOpen, setEventOpen] = useState(false);
+    const [manualInvitees, setManualInvitees] = useState([createEmptyInvitee()]);
+    const [manualInviteesError, setManualInviteesError] = useState('');
 
     useEffect(() => {
         const fetchEventData = async () => {
@@ -231,9 +239,70 @@ const AddEvent = () => {
         setValidationErrors((prev) => ({ ...prev, media: '' }));
     };
 
+    const handleInviteeChange = (index, field, value) => {
+        setManualInvitees((prev) =>
+            prev.map((invitee, inviteeIndex) =>
+                inviteeIndex === index
+                    ? { ...invitee, [field]: value }
+                    : invitee
+            )
+        );
+
+        if (manualInviteesError) {
+            setManualInviteesError('');
+        }
+    };
+
+    const handleAddInviteeRow = () => {
+        setManualInvitees((prev) => [...prev, createEmptyInvitee()]);
+        if (manualInviteesError) {
+            setManualInviteesError('');
+        }
+    };
+
+    const handleRemoveInviteeRow = (index) => {
+        setManualInvitees((prev) => {
+            if (prev.length === 1) {
+                return [createEmptyInvitee()];
+            }
+
+            return prev.filter((_, inviteeIndex) => inviteeIndex !== index);
+        });
+
+        if (manualInviteesError) {
+            setManualInviteesError('');
+        }
+    };
+
+    const getFilledInvitees = () =>
+        manualInvitees
+            .map((invitee) => ({
+                name: invitee.name.trim(),
+                number: invitee.number.trim(),
+                email: invitee.email.trim(),
+            }))
+            .filter((invitee) => invitee.name || invitee.number || invitee.email);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const errors = {};
+        const filledInvitees = getFilledInvitees();
+
+        const invalidInviteeIndex = filledInvitees.findIndex((invitee) => {
+            if (!invitee.name) return true;
+            if (sendWhatsApp && !invitee.number) return true;
+            if (sendEmail && !invitee.email) return true;
+
+            return false;
+        });
+
+        if (invalidInviteeIndex !== -1) {
+            setManualInviteesError(
+                `Invitee row ${invalidInviteeIndex + 1} must include name${sendWhatsApp ? ', phone number' : ''}${sendEmail ? `${sendWhatsApp ? ',' : ''} email` : ''}.`
+            );
+        } else {
+            setManualInviteesError('');
+        }
 
         if (!isEditMode) {
             if (!title.trim()) errors.title = "Title is required";
@@ -245,7 +314,7 @@ const AddEvent = () => {
             if (!dateTime) errors.dateTime = "Date & Time is required";
             if (!eDateTime) errors.eDateTime = "Event Date & Time is required";
             if (csvError) errors.csvError = csvError;
-
+            if (invalidInviteeIndex !== -1) errors.manualInvitees = "Please complete the invitee rows";
         } else {
             if (!location.trim()) errors.location = "Location is required";
         }
@@ -295,6 +364,9 @@ const AddEvent = () => {
             formData.append("eventDateTime", eventDateTime);
             if (mediaFile) formData.append("image", mediaFile);
             if (csvFile) formData.append("file", csvFile);
+            if (filledInvitees.length > 0) {
+                formData.append("invitees", JSON.stringify(filledInvitees));
+            }
 
             await createEvent(formData, token);
             toast.success("Event added successfully");
@@ -715,6 +787,87 @@ const AddEvent = () => {
                                 </label>
                                 {csvError && <Typography sx={{ color: "#d32f2f", fontSize: '14px', margin: "4px 14px 0" }}>{csvError}</Typography>}
 
+                                {!isEditMode && (
+                                    <Box sx={{ mt: 3 }}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2, mb: 1.5, flexWrap: 'wrap' }}>
+                                            <Typography sx={{ fontSize: '16px', fontWeight: 600, color: '#1F2937' }}>
+                                                Add invitees directly
+                                            </Typography>
+                                            <Button
+                                                variant="outlined"
+                                                startIcon={<AddCircleOutline />}
+                                                onClick={handleAddInviteeRow}
+                                                sx={{
+                                                    borderRadius: '12px',
+                                                    textTransform: 'none',
+                                                    color: '#5829CF',
+                                                    borderColor: '#5829CF',
+                                                }}
+                                            >
+                                                Add Row
+                                            </Button>
+                                        </Box>
+
+                                        <Grid container spacing={1.5}>
+                                            {manualInvitees.map((invitee, index) => (
+                                                <React.Fragment key={`invitee-${index}`}>
+                                                    <Grid item size={{ xs: 12, md: 4 }}>
+                                                        <TextField
+                                                            fullWidth
+                                                            placeholder="Invitee name"
+                                                            value={invitee.name}
+                                                            onChange={(e) => handleInviteeChange(index, 'name', e.target.value)}
+                                                            InputProps={{
+                                                                classes: { root: 'custom-input' },
+                                                            }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item size={{ xs: 12, md: 3.5 }}>
+                                                        <TextField
+                                                            fullWidth
+                                                            placeholder="Phone number"
+                                                            value={invitee.number}
+                                                            onChange={(e) => handleInviteeChange(index, 'number', e.target.value)}
+                                                            InputProps={{
+                                                                classes: { root: 'custom-input' },
+                                                            }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item size={{ xs: 12, md: 3.5 }}>
+                                                        <TextField
+                                                            fullWidth
+                                                            placeholder="Email address"
+                                                            value={invitee.email}
+                                                            onChange={(e) => handleInviteeChange(index, 'email', e.target.value)}
+                                                            InputProps={{
+                                                                classes: { root: 'custom-input' },
+                                                            }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item size={{ xs: 12, md: 1 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                        <IconButton
+                                                            onClick={() => handleRemoveInviteeRow(index)}
+                                                            disabled={manualInvitees.length === 1 && !invitee.name && !invitee.number && !invitee.email}
+                                                            sx={{ color: '#D32F2F' }}
+                                                        >
+                                                            <DeleteOutline />
+                                                        </IconButton>
+                                                    </Grid>
+                                                </React.Fragment>
+                                            ))}
+                                        </Grid>
+
+                                        <Typography sx={{ mt: 1.5, fontSize: '13px', color: '#6B7280' }}>
+                                            You can upload a file, type invitees here, or use both together.
+                                        </Typography>
+
+                                        {(manualInviteesError || validationErrors.manualInvitees) && (
+                                            <Typography sx={{ color: "#d32f2f", fontSize: '14px', mt: 1 }}>
+                                                {manualInviteesError || validationErrors.manualInvitees}
+                                            </Typography>
+                                        )}
+                                    </Box>
+                                )}
                             </Box>
                         </Card >
                     </Grid>

@@ -55,6 +55,35 @@ function checkRequiredFields(headers, emailSent, whatsappSent) {
   return lowerHeaders;
 }
 
+function validateContactRow(row, emailSent, whatsappSent, rowLabel = "Row") {
+  const missingFields = [];
+  const normalizedRow = {
+    name: row?.name ? String(row.name).trim() : "",
+    email: row?.email ? String(row.email).trim() : "",
+    number: row?.number ? String(row.number).trim() : "",
+    phone: row?.phone ? String(row.phone).trim() : "",
+  };
+
+  if (!normalizedRow.name) {
+    missingFields.push("name");
+  }
+
+  if (emailSent && !normalizedRow.email) {
+    missingFields.push("email");
+  }
+
+  if (whatsappSent && !normalizedRow.number && !normalizedRow.phone) {
+    missingFields.push("phone number");
+  }
+
+  if (missingFields.length > 0) {
+    const fieldList = missingFields.join(" and ");
+    throw new Error(`${rowLabel}: All rows must have valid ${fieldList}.`);
+  }
+
+  return normalizedRow;
+}
+
 async function validateCSVFile(file, emailSent, whatsappSent) {
   return new Promise((resolve, reject) => {
     const results = [];
@@ -74,21 +103,11 @@ async function validateCSVFile(file, emailSent, whatsappSent) {
         }
       })
       .on("data", (data) => {
-        const missingFields = [];
-        if (!data.name || data.name.trim() === "") {
-          missingFields.push("name");
+        try {
+          results.push(validateContactRow(data, emailSent, whatsappSent));
+        } catch (err) {
+          reject(err);
         }
-        if (emailSent && (!data.email || data.email.trim() === "")) {
-          missingFields.push("email");
-        }
-        if (whatsappSent && !data.number && !data.phone) {
-          missingFields.push("phone number");
-        }
-        if (missingFields.length > 0) {
-          const fieldList = missingFields.join(" and ");
-          reject(new Error(`All rows must have valid ${fieldList}.`));
-        }
-        results.push(data);
       })
       .on("end", () => {
         if (!headersChecked) {
@@ -129,21 +148,9 @@ async function validateExcelFile(file, emailSent, whatsappSent) {
       lowerHeaders.forEach((key, idx) => {
         row[key] = rowArr[idx];
       });
-      const missingFields = [];
-      if (!row.name || String(row.name).trim() === "") {
-        missingFields.push("name");
-      }
-      if (emailSent && (!row.email || String(row.email).trim() === "")) {
-        missingFields.push("email");
-      }
-      if (whatsappSent && !row.number && !row.phone) {
-        missingFields.push("phone number");
-      }
-      if (missingFields.length > 0) {
-        const fieldList = missingFields.join(" and ");
-        throw new Error(`Row ${i + 2}: All rows must have valid ${fieldList}.`);
-      }
-      validatedData.push(row);
+      validatedData.push(
+        validateContactRow(row, emailSent, whatsappSent, `Row ${i + 2}`)
+      );
     }
     if (validatedData.length === 0) {
       throw new Error("Excel file must contain at least one valid data row.");
@@ -171,6 +178,27 @@ async function validateContactsFile(
   }
 }
 
+function validateManualInvitees(invitees, emailSent, whatsappSent) {
+  if (!Array.isArray(invitees)) {
+    throw new Error("Invitees must be provided as an array.");
+  }
+
+  const sanitizedInvitees = invitees
+    .map((invitee, index) =>
+      validateContactRow(invitee, emailSent, whatsappSent, `Invitee row ${index + 1}`)
+    )
+    .filter((invitee) => invitee.name || invitee.email || invitee.number || invitee.phone);
+
+  if (sanitizedInvitees.length === 0) {
+    throw new Error("Invitees list must contain at least one valid row.");
+  }
+
+  return {
+    headers: ["name", "number", "email"],
+    data: sanitizedInvitees,
+  };
+}
+
 async function processValidatedContacts(
   validatedData,
   parentId,
@@ -179,7 +207,7 @@ async function processValidatedContacts(
   whatsappSent,
   date
 ) {
-  const { headers, data } = validatedData;
+  const { data } = validatedData;
 
   const contacts = data.map((row) => ({
     parentId,
@@ -217,6 +245,7 @@ exports.createEvent = async (req, res) => {
       location,
       emailSent,
       whatsappSent,
+      invitees,
     } = req.body;
 
     const emailSentBool = emailSent === true || emailSent === "true";
@@ -259,6 +288,7 @@ exports.createEvent = async (req, res) => {
     }
 
     let validatedFileData = null;
+    let validatedManualInvitees = null;
     if (file?.path) {
       try {
         const fileBuffer = fs.readFileSync(file.path);
@@ -278,6 +308,27 @@ exports.createEvent = async (req, res) => {
         return res.status(400).json({
           success: false,
           message: "File validation failed",
+          error: validationError.message,
+        });
+      }
+    }
+
+    if (invitees) {
+      try {
+        const parsedInvitees =
+          typeof invitees === "string" ? JSON.parse(invitees) : invitees;
+        validatedManualInvitees = validateManualInvitees(
+          parsedInvitees,
+          emailSentBool,
+          whatsappSentBool
+        );
+        console.log(
+          `Manual invitee validation successful: ${validatedManualInvitees.data.length} contacts found`
+        );
+      } catch (validationError) {
+        return res.status(400).json({
+          success: false,
+          message: "Manual invitee validation failed",
           error: validationError.message,
         });
       }
@@ -334,16 +385,31 @@ exports.createEvent = async (req, res) => {
       }
     }
 
-    if (validatedFileData) {
+    if (validatedFileData || validatedManualInvitees) {
       try {
-        const contactsCount = await processValidatedContacts(
-          validatedFileData,
-          parentId,
-          event._id,
-          emailSentBool,
-          whatsappSentBool,
-          scheduleTime
-        );
+        let contactsCount = 0;
+
+        if (validatedFileData) {
+          contactsCount += await processValidatedContacts(
+            validatedFileData,
+            parentId,
+            event._id,
+            emailSentBool,
+            whatsappSentBool,
+            scheduleTime
+          );
+        }
+
+        if (validatedManualInvitees) {
+          contactsCount += await processValidatedContacts(
+            validatedManualInvitees,
+            parentId,
+            event._id,
+            emailSentBool,
+            whatsappSentBool,
+            scheduleTime
+          );
+        }
 
         if (file.path && fs.existsSync(file.path)) {
           fs.unlinkSync(file.path);
