@@ -302,7 +302,7 @@ exports.createEvent = async (req, res) => {
           `File validation successful: ${validatedFileData.data.length} contacts found`
         );
       } catch (validationError) {
-        if (file.path && fs.existsSync(file.path)) {
+        if (file?.path && fs.existsSync(file.path)) {
           fs.unlinkSync(file.path);
         }
         return res.status(400).json({
@@ -423,16 +423,13 @@ exports.createEvent = async (req, res) => {
           "Failed to process contacts after event creation:",
           processingError
         );
-        return res.status(500).json({
-          success: false,
-          message: "Event created but failed to process contacts",
-          error: processingError.message,
-          event,
-        });
       }
     }
   } catch (error) {
     console.error("Event creation error:", error);
+    if (res.headersSent) {
+      return;
+    }
     res.status(500).json({
       success: false,
       message: "Internal server error",
