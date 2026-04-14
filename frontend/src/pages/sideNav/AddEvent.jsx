@@ -478,6 +478,9 @@ const AddEvent = () => {
                                     },
                                 }}
                             />
+                            <Typography sx={{ mt: 1, fontSize: '13px', color: '#6B7280' }}>
+                                When WhatsApp is enabled, the full description is sent as written and the template language is detected automatically from the event content.
+                            </Typography>
 
                             <InputLabel className='footer-label'>Footer</InputLabel>
                             <TextField

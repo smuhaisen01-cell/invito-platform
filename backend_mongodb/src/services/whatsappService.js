@@ -12,20 +12,34 @@ function generateRandomDelay(minMs = DELAY_MIN_MS, maxMs = DELAY_MAX_MS) {
   return Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
 }
 
-function getReusableEventTemplateConfig() {
-  const templateName = process.env.WHATSAPP_EVENT_TEMPLATE_NAME;
+function getReusableEventTemplateConfig(languageCode = 'en') {
+  const normalizedLanguageCode = String(languageCode || 'en').toLowerCase();
+  const isArabic = normalizedLanguageCode.startsWith('ar');
+  const templateName =
+    (isArabic
+      ? process.env.WHATSAPP_EVENT_TEMPLATE_NAME_AR
+      : process.env.WHATSAPP_EVENT_TEMPLATE_NAME_EN) ||
+    process.env.WHATSAPP_EVENT_TEMPLATE_NAME;
+
   if (!templateName) {
     return null;
   }
 
   return {
     templateName,
-    languageCode: process.env.WHATSAPP_EVENT_TEMPLATE_LANGUAGE || 'en',
+    languageCode:
+      (isArabic
+        ? process.env.WHATSAPP_EVENT_TEMPLATE_LANGUAGE_AR
+        : process.env.WHATSAPP_EVENT_TEMPLATE_LANGUAGE_EN) ||
+      process.env.WHATSAPP_EVENT_TEMPLATE_LANGUAGE ||
+      normalizedLanguageCode,
     bodyParameterNames: [
       process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_1 || 'guest_name',
       process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_2 || 'event_title',
-      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_3 || 'event_date',
-      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_4 || 'event_location',
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_3 || 'event_description',
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_4 || 'event_date',
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_5 || 'event_time',
+      process.env.WHATSAPP_EVENT_TEMPLATE_PARAM_6 || 'event_location',
     ],
     status: 'APPROVED',
   };
@@ -112,10 +126,11 @@ async function createEventTemplate({
   description,
   footerText = '',
   buttonUrl = '',
-  contactId
+  contactId,
+  languageCode = 'en',
 }) {
   try {
-    const reusableTemplate = getReusableEventTemplateConfig();
+    const reusableTemplate = getReusableEventTemplateConfig(languageCode);
     if (reusableTemplate) {
       console.log(`Using reusable WhatsApp template: ${reusableTemplate.templateName}`);
       return {
@@ -189,7 +204,7 @@ async function createEventTemplate({
 
     const whatsappPayload = {
       name: `event_${Date.now()}`,
-      language: 'en',
+      language: languageCode || 'en',
       category: 'UTILITY',
       messaging_product: 'whatsapp',
       components

@@ -49,6 +49,21 @@ function formatWhatsAppEventDate(value) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+  });
+}
+
+function formatWhatsAppEventTime(value) {
+  if (!value) {
+    return '';
+  }
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return '';
+  }
+
+  return parsed.toLocaleTimeString('en-US', {
+    timeZone: 'Asia/Riyadh',
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
@@ -67,8 +82,10 @@ async function sendWhatsAppToContact(event, contact) {
       bodyParameters: [
         contact.name,
         event.title,
+        event.description || '',
         formatWhatsAppEventDate(event.eventDateTime),
-        event.location,
+        formatWhatsAppEventTime(event.eventDateTime),
+        event.location || '',
       ],
       imageUrl: process.env.NODE_ENV =='local' ? STATIC_IMAGE_URL : event.whatsapp.imageUrl  , // Using static image
      

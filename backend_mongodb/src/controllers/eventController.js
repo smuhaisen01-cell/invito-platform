@@ -10,6 +10,19 @@ const QRCode = require("qrcode");
 const { createEventTemplate } = require("../services/whatsappService");
 const User = require("../models/User");
 
+function detectTemplateLanguage(...values) {
+  const combinedText = values
+    .filter(Boolean)
+    .map((value) => String(value))
+    .join(" ");
+
+  if (/[\u0600-\u06FF]/.test(combinedText)) {
+    return "ar";
+  }
+
+  return "en";
+}
+
 async function insertInBatches(model, docs, batchSize = 500) {
   for (let i = 0; i < docs.length; i += batchSize) {
     const batch = docs.slice(i, i + batchSize);
@@ -336,6 +349,7 @@ exports.createEvent = async (req, res) => {
 
     const baseUrl = process.env.BACKEND_URL;
     const imageUrl = `${baseUrl}/uploads/images/${imageFile.filename}`;
+    const whatsappLanguageCode = detectTemplateLanguage(title, description, footerText, location);
 
     const event = new Event({
       parentId,
@@ -369,11 +383,12 @@ exports.createEvent = async (req, res) => {
           headerText: title,
           description,
           footerText,
+          languageCode: whatsappLanguageCode,
         });
         event.whatsapp = {
           templateId: template.templateId,
           templateName: template.templateName,
-          languageCode: template.languageCode || "en",
+          languageCode: template.languageCode || whatsappLanguageCode,
           bodyParameterNames: template.bodyParameterNames || [],
           status: template.status,
           mediaId: template.mediaId,
@@ -411,7 +426,7 @@ exports.createEvent = async (req, res) => {
           );
         }
 
-        if (file.path && fs.existsSync(file.path)) {
+        if (file?.path && fs.existsSync(file.path)) {
           fs.unlinkSync(file.path);
         }
 
